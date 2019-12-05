@@ -36,24 +36,28 @@ def task_planner(name, schema):
 
     root = composites.Sequence(name=name)
     task_layer = -len(schema)
-    pdb.set_trace()
+    #pdb.set_trace()
+    task_layer = task_layer
     tasks = schema[task_layer]['children']
+    task_parameters  = schema[task_layer]['parameters']
     # while task_layer < 1:
     for task in tasks:
+
         task_selector = composites.Selector(name=schema[task_layer]['name'])
         task_guard = behaviours.CheckBlackboardVariableValue(
             # tasks[0] predefined as precondition in json schema
-            name=task[0],
-            variable_name=task.name.lower().replace(" ", "_") + "_done",
+            name=task,
+            variable_name=task,
             expected_value=True
         )
         # task[1] predefined as the action in json schema
         sequence = composites.Sequence(name=tasks[1])
         mark_task_done = behaviours.SetBlackboardVariable(
-            name=task[1],
-            variable_name=task.name.lower().replace(" ", "_") + "_done",
+            name=task,
+            variable_name=task,
             variable_value=True
         )
+
         sequence.add_children([task, mark_task_done])
         task_selector.add_children([task_guard, sequence])
         root.add_child(task_selector)

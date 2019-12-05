@@ -124,79 +124,6 @@ def post_tick_handler(snapshot_visitor, behaviour_tree):
         )
     )
 
-
-
-
-'''
-def expand_tree(schema: list, root, tree_layer, children_layer):
-    """
-
-    :type tree_layer: int
-    """
-    # 2. add children to root
-    children_json = schema[tree_layer]['children']
-    # add control nodes. Control nodes are of :class:`~py_trees.composites.Composite`
-
-    for child in children_json:
-        # children_layer += 1
-        # pdb.set_trace()
-        print("Child in json: ", child)
-        print("tree layer: ", tree_layer)
-        print("root: ", root)
-
-        if "sequence" in child:
-            new_child = py_trees.composites.Sequence(child)
-            root.add_child(new_child)
-            # update root
-
-            root = new_child
-            tree_layer += 1
-            if tree_layer <= -1:
-                expand_tree(schema, root, tree_layer, children_layer)
-            else:
-                return root
-
-        if "selector" in child:
-            new_child = py_trees.composites.Selector(child)
-            root.add_child(new_child)
-            # update root
-
-            root = new_child
-            tree_layer += 1
-            print("children layer: ", children_layer)
-            if tree_layer <= -1:
-                expand_tree(schema, root, tree_layer, children_layer)
-            else:
-                return root
-        if "parallel" in child:
-            new_child = py_trees.composites.Parallel(child)
-            root.add_child(new_child)
-            # update root
-
-            root = new_child
-            tree_layer += 1
-            expand_tree(schema, root, tree_layer, children_layer)
-
-        # 3. update level and keep on expanding
-
-        execution_node = py_trees.behaviours.Count(name=child,
-                                                   fail_until=0,
-                                                   running_until=1,
-                                                   success_until=10)
-        # pdb.set_trace()
-        root.add_child(execution_node)
-        print("root: ", root)
-        # pdb.set_trace()
-        if children_layer >= len(children_json):
-            print("going back. Tree layer: ", tree_layer + 1)
-            # children_layer = -len(schema[tree_layer + 1]['children'])
-            children_layer = 0
-            return root
-            # root = create_root_from_schema(schema)
-        # expand_tree(schema, root, tree_layer+1, children_layer)
-'''
-
-
 def create_root_from_schema(schema, layer):
     root_json = schema[layer]['name']
     if ('sequence' in root_json):
@@ -237,8 +164,8 @@ def expand_subtrees(schema, root, tree_layer):
 
 def main():
     """
-    Entry point for the demo script.
-    """
+        Entry point for the demo script.
+        """
     args = command_line_argument_parser().parse_args()
     py_trees.logging.level = py_trees.logging.Level.DEBUG
 
@@ -246,7 +173,7 @@ def main():
     # JSON
     ####################
 
-    json_schema: object = load_schema('/home/pilar/Documents/PhD/py_trees/py_trees/schemas/pickandplace_schema_v3.json')
+    json_schema: object = load_schema('/home/pilar/Documents/PhD/git-delacruz/delacruz/py_attentional_trees/py_trees/schemas/pickandplace_schema_v3.json')
 
     ####################
     # TREE EXPANSION
@@ -260,13 +187,20 @@ def main():
     root = create_root_from_schema(schema=json_schema, layer=tree_layer)
 
     # expand subtrees
-    while tree_layer < -1:
-        root_subtree = create_root_from_schema(schema=json_schema, layer=(tree_layer+1))
-        subtree = expand_subtrees(schema=json_schema, tree_layer=(tree_layer+1), root=root_subtree)
-        # add subtree to root
-        root.add_child(subtree)
-        # update tree layer
-        tree_layer += 1
+    #while tree_layer < -1:
+    #root_subtree = create_root_from_schema(schema=json_schema, layer=(tree_layer+1))
+    #subtree = expand_subtrees(schema=json_schema, tree_layer=(tree_layer+1), root=root_subtree)
+    # add subtree to root
+    #root.add_child(subtree)
+    # update tree layer
+    #tree_layer += 1
+
+    idiom_tree = py_trees.idioms.task_planner(
+        name="Task Planner demo",
+        schema=json_schema
+    )
+
+    root.add_children(idiom_tree)
 
 
     ####################
