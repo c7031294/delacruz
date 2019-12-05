@@ -143,6 +143,43 @@ class BehaviourTree(object):
         self.interrupt_tick_tocking = False
         self.tree_update_handler = None  # child classes can utilise this one
 
+
+    def _create_root_from_schema(schema, layer):
+        root_json = schema[layer]['name']
+        if ('sequence' in root_json):
+            root = py_trees.composites.Sequence(root_json)
+        if ('selector' in root_json):
+            root = py_trees.composites.Selector(root_json)
+        if ('parallel' in root_json):
+            root = py_trees.composites.Parallel(root_json)
+
+        return root
+
+    def _expand_subtrees(schema, tree_layer, subtrees):
+
+        # create root of subtree
+        root = create_root_from_schema(schema, tree_layer)
+        children_json = schema[tree_layer]['children']
+        # add the childs to root of subtree
+        for child in children_json:
+            execution_node = py_trees.behaviours.Count(name=child,
+                                                       fail_until=0,
+                                                       running_until=1,
+                                                       success_until=10)
+            root.add_child(execution_node)
+        # add subtree to list of subtrees
+        subtrees.append(root)
+        # update root of subtree
+        tree_layer +=1
+        root = create_root_from_schema(schema, tree_layer)
+        # continue expanding subtrees until end of schema
+        if(tree_layer <= -1):
+            return expand_subtrees(schema, root, tree_layer, subtrees)
+        else:
+            return root
+
+
+
     def add_pre_tick_handler(self, handler):
         """
         Add a function to execute before the tree is ticked. The function must have

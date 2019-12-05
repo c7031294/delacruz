@@ -1,0 +1,5 @@
+Approach 1a
+1. create a list of subtrees
+2. add the subtrees to root in order
+    2.1. specify the overall root
+    2.2. when subtree is added to list, look for its root and add it to overall root

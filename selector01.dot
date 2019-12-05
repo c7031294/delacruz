@@ -1,0 +1,6 @@
+digraph pastafarianism {
+graph [fontname="times-roman"];
+node [fontname="times-roman"];
+edge [fontname="times-roman"];
+selector01 [fillcolor=cyan, fontcolor=black, fontsize=9, label=selector01, shape=octagon, style=filled];
+}

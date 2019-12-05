@@ -1,0 +1,31 @@
+[
+  {
+    "name":"sequence01",
+    "type":"sequence",
+    "father": "",
+    "children": [],
+    "parameters": []
+  },
+  {
+    "name":"selector01",
+    "type":"selector",
+    "father": "sequence01",
+    "children": ["isReached","reach"],
+    "parameters": ["distanceToObject", "emphasis", "reached"]
+  },
+  {
+    "name":"selector02",
+    "type":"selector",
+    "father": "sequence01",
+    "children": ["isPicked","pick"],
+    "parameters": ["picked", "emphasis"]
+  },
+  {
+    "name":"selector03",
+    "type":"selector",
+    "father": "sequence01",
+    "children": ["isPlaced","place"],
+    "parameters": ["placed", "emphasis"]
+  }
+
+]

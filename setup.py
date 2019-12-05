@@ -70,6 +70,8 @@ d = setup(
             'py-trees-demo-selector = py_trees.demos.selector:main',
             'py-trees-demo-sequence = py_trees.demos.sequence:main',
             'py-trees-demo-tree-stewardship = py_trees.demos.stewardship:main',
+            'py-trees-demo-tree-pilar = py_trees.demos.testpilar:main',
+            'py-trees-demo-testemphasis = py_trees.demos.testemphasis:main'
         ],
     },
 )

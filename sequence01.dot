@@ -1,0 +1,53 @@
+digraph pastafarianism {
+graph [fontname="times-roman"];
+node [fontname="times-roman"];
+edge [fontname="times-roman"];
+sequence01 [fillcolor=orange, fontcolor=black, fontsize=9, label=sequence01, shape=box, style=filled];
+selector01 [fillcolor=cyan, fontcolor=black, fontsize=9, label=selector01, shape=octagon, style=filled];
+sequence01 -> selector01;
+isReached [fillcolor=gray, fontcolor=black, fontsize=9, label=isReached, shape=ellipse, style=filled];
+selector01 -> isReached;
+reach [fillcolor=gray, fontcolor=black, fontsize=9, label=reach, shape=ellipse, style=filled];
+selector01 -> reach;
+subgraph  {
+label=children_of_selector01;
+rank=same;
+isReached [fillcolor=gray, fontcolor=black, fontsize=9, label=isReached, shape=ellipse, style=filled];
+reach [fillcolor=gray, fontcolor=black, fontsize=9, label=reach, shape=ellipse, style=filled];
+}
+
+selector02 [fillcolor=cyan, fontcolor=black, fontsize=9, label=selector02, shape=octagon, style=filled];
+sequence01 -> selector02;
+isPicked [fillcolor=gray, fontcolor=black, fontsize=9, label=isPicked, shape=ellipse, style=filled];
+selector02 -> isPicked;
+pick [fillcolor=gray, fontcolor=black, fontsize=9, label=pick, shape=ellipse, style=filled];
+selector02 -> pick;
+subgraph  {
+label=children_of_selector02;
+rank=same;
+isPicked [fillcolor=gray, fontcolor=black, fontsize=9, label=isPicked, shape=ellipse, style=filled];
+pick [fillcolor=gray, fontcolor=black, fontsize=9, label=pick, shape=ellipse, style=filled];
+}
+
+selector03 [fillcolor=cyan, fontcolor=black, fontsize=9, label=selector03, shape=octagon, style=filled];
+sequence01 -> selector03;
+isPlaced [fillcolor=gray, fontcolor=black, fontsize=9, label=isPlaced, shape=ellipse, style=filled];
+selector03 -> isPlaced;
+place [fillcolor=gray, fontcolor=black, fontsize=9, label=place, shape=ellipse, style=filled];
+selector03 -> place;
+subgraph  {
+label=children_of_selector03;
+rank=same;
+isPlaced [fillcolor=gray, fontcolor=black, fontsize=9, label=isPlaced, shape=ellipse, style=filled];
+place [fillcolor=gray, fontcolor=black, fontsize=9, label=place, shape=ellipse, style=filled];
+}
+
+subgraph  {
+label=children_of_sequence01;
+rank=same;
+selector01 [fillcolor=cyan, fontcolor=black, fontsize=9, label=selector01, shape=octagon, style=filled];
+selector02 [fillcolor=cyan, fontcolor=black, fontsize=9, label=selector02, shape=octagon, style=filled];
+selector03 [fillcolor=cyan, fontcolor=black, fontsize=9, label=selector03, shape=octagon, style=filled];
+}
+
+}

@@ -1,0 +1,72 @@
+[
+  {
+    "name": "sequence01",
+    "type": "sequence",
+    "father": "selector00",
+    "children": ["selector01","selector02","selector03"],
+    "parameters": ["emphasis"]
+  },
+  {
+    "name":"selector01",
+    "type":"selector",
+    "father": "sequence01",
+    "children": ["isReached","reach"],
+    "parameters": ["distanceToObject", "emphasis", "reached"]
+  },
+  {
+    "name":"selector02",
+    "type":"selector",
+    "father": "sequence01",
+    "children": ["isPicked","pick"],
+    "parameters": ["picked", "emphasis"]
+  },
+  {
+    "name":"selector03",
+    "type":"selector",
+    "father": "sequence01",
+    "children": ["isPlaced","place"],
+    "parameters": ["placed", "emphasis"]
+  },
+  {
+    "name":"reach",
+    "type":"action",
+    "father": "selector01",
+    "children": [],
+    "parameters": ["object", "emphasis"]
+  },
+  {
+    "name":"pick",
+    "type":"action",
+    "father": "selector02",
+    "children": [],
+    "parameters": ["object", "emphasis"]
+  },
+  {
+    "name":"place",
+    "type":"action",
+    "father": "selector03",
+    "children": [],
+    "parameters": ["object", "emphasis"]
+  },
+  {
+    "name":"isReached",
+    "type":"condition",
+    "father": "selector01",
+    "children": [],
+    "parameters": ["object","emphasis"]
+  },
+  {
+    "name":"isPicked",
+    "type":"condition",
+    "father": "selector02",
+    "children": [],
+    "parameters": ["object","emphasis"]
+  },
+  {
+    "name":"isPlaced",
+    "type":"condition",
+    "father": "selector03",
+    "children": [],
+    "parameters": ["object","emphasis"]
+  }
+]

@@ -23,3 +23,5 @@ from . import lifecycle  # noqa
 from . import selector  # noqa
 from . import sequence  # noqa
 from . import stewardship  # noqa
+from . import testpilar # noqa
+from . import testemphasis # noqa

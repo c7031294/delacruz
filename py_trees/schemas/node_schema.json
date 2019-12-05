@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Sequence",
+    "type": "control",
+    "father": "fatherId",
+    "children": [],
+    "parameters": []
+  },
+  {
+    "name":"selector",
+    "type":"control",
+    "father": "fatherId",
+    "children": [],
+    "parameters": []
+  },
+  {
+    "name":"parallel",
+    "type":"control",
+    "father": "fatherId",
+    "children": [],
+    "parameters": []
+  },
+  {
+    "name":"decorator",
+    "type":"control",
+    "father": "fatherId",
+    "children": [],
+    "parameters": []
+  },
+  {
+    "name":"actionId",
+    "type":"action",
+    "father": "fatherId",
+    "parameters": []
+  },
+  {
+    "name":"conditionId",
+    "type":"condition",
+    "father": "fatherId",
+    "parameters": []
+  }
+]

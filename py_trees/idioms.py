@@ -25,10 +25,40 @@ from . import blackboard
 from . import common
 from . import composites
 from . import decorators
+import pdb
+
 
 ##############################################################################
 # Creational Methods
 ##############################################################################
+
+def task_planner(name, schema):
+
+    root = composites.Sequence(name=name)
+    task_layer = -len(schema)
+    pdb.set_trace()
+    tasks = schema[task_layer]['children']
+    # while task_layer < 1:
+    for task in tasks:
+        task_selector = composites.Selector(name=schema[task_layer]['name'])
+        task_guard = behaviours.CheckBlackboardVariableValue(
+            # tasks[0] predefined as precondition in json schema
+            name=task[0],
+            variable_name=task.name.lower().replace(" ", "_") + "_done",
+            expected_value=True
+        )
+        # task[1] predefined as the action in json schema
+        sequence = composites.Sequence(name=tasks[1])
+        mark_task_done = behaviours.SetBlackboardVariable(
+            name=task[1],
+            variable_name=task.name.lower().replace(" ", "_") + "_done",
+            variable_value=True
+        )
+        sequence.add_children([task, mark_task_done])
+        task_selector.add_children([task_guard, sequence])
+        root.add_child(task_selector)
+
+    return root
 
 
 def pick_up_where_you_left_off(
@@ -98,9 +128,9 @@ def pick_up_where_you_left_off(
 
 def eternal_guard(
         subtree: behaviour.Behaviour,
-        name: str="Eternal Guard",
-        conditions: List[behaviour.Behaviour]=[],
-        blackboard_variable_prefix: str=None) -> behaviour.Behaviour:
+        name: str = "Eternal Guard",
+        conditions: List[behaviour.Behaviour] = [],
+        blackboard_variable_prefix: str = None) -> behaviour.Behaviour:
     """
     The eternal guard idiom implements a stronger :term:`guard` than the typical check at the
     beginning of a sequence of tasks. Here they guard continuously while the task sequence
@@ -178,9 +208,9 @@ def eternal_guard(
 
 def oneshot(
         behaviour: behaviour.Behaviour,
-        name: str="Oneshot",
-        variable_name: str="oneshot",
-        policy: common.OneShotPolicy=common.OneShotPolicy.ON_SUCCESSFUL_COMPLETION
+        name: str = "Oneshot",
+        variable_name: str = "oneshot",
+        policy: common.OneShotPolicy = common.OneShotPolicy.ON_SUCCESSFUL_COMPLETION
 ) -> behaviour.Behaviour:
     """
     Ensure that a particular pattern is executed through to
