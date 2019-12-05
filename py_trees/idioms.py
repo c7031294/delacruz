@@ -38,29 +38,38 @@ def task_planner(name, schema):
     task_layer = -len(schema)
     #pdb.set_trace()
     task_layer = task_layer
-    tasks = schema[task_layer]['children']
-    task_parameters  = schema[task_layer]['parameters']
-    # while task_layer < 1:
-    for task in tasks:
+    while task_layer < -1:
+        tasks = schema[task_layer]['children']
+        task_parameters = schema[task_layer]['parameters']
+       # pdb.set_trace()
 
-        task_selector = composites.Selector(name=schema[task_layer]['name'])
-        task_guard = behaviours.CheckBlackboardVariableValue(
-            # tasks[0] predefined as precondition in json schema
-            name=task,
-            variable_name=task,
-            expected_value=True
-        )
-        # task[1] predefined as the action in json schema
-        sequence = composites.Sequence(name=tasks[1])
-        mark_task_done = behaviours.SetBlackboardVariable(
-            name=task,
-            variable_name=task,
-            variable_value=True
-        )
+        for t in range(0,len(tasks)-1):
+            # task
+            task = behaviours.Count(
+                name=tasks[t+1],
+                fail_until=0,
+                running_until=2,
+                success_until=10
+            )
+            task_selector = composites.Selector(name=schema[task_layer]['name'])
+            # task guard
+            pre_condition = behaviours.CheckBlackboardVariableValue(
+                name=tasks[t],
+                variable_name=tasks[t],
+                expected_value=True
+            )
+            sequence = composites.Sequence(name=tasks[t])
+            # mark task done
+            post_condition = behaviours.SetBlackboardVariable(
+                name=task_parameters[0],
+                variable_name=task_parameters[0],
+                variable_value=True
+            )
 
-        sequence.add_children([task, mark_task_done])
-        task_selector.add_children([task_guard, sequence])
-        root.add_child(task_selector)
+            sequence.add_children([task, post_condition])
+            task_selector.add_children([pre_condition, sequence])
+            root.add_child(task_selector)
+            task_layer += 1
 
     return root
 

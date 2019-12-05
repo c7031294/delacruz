@@ -6,5 +6,5 @@ python setup.py install
 
 #py-trees-demo-tree-pilar -i
 
-py-trees-demo-testemphasis -r
+py-trees-demo-automated-planning -r
 

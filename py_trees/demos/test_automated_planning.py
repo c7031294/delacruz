@@ -9,13 +9,13 @@
 
 """
 .. argparse::
-   :module: py_trees.demos.pick_up_where_you_left_off
+   :module: py_trees.demos.test_automated_planning
    :func: command_line_argument_parser
-   :prog: py-trees-demo-pick-up-where-you-left-off
+   :prog: py-trees-demo-automated-planning
 
-.. graphviz:: dot/pick_up_where_you_left_off.dot
+.. graphviz:: dot/task_planner_demo.dot
 
-.. image:: images/pick_up_where_you_left_off.gif
+.. image:: images/task_planner_demo.gif
 """
 
 ##############################################################################
@@ -24,13 +24,15 @@
 
 import argparse
 import functools
-import json
-import sys
-import time
+from typing import List, Any
 
 import py_trees
-import py_trees.console as console
+import sys
+import time
+import json
+import pdb
 
+import py_trees.console as console
 
 ##############################################################################
 # JSON
@@ -162,8 +164,8 @@ def expand_subtrees(schema, root, tree_layer):
 
 def main():
     """
-    Entry point for the demo script.
-    """
+        Entry point for the demo script.
+        """
     args = command_line_argument_parser().parse_args()
     py_trees.logging.level = py_trees.logging.Level.DEBUG
 
@@ -171,28 +173,16 @@ def main():
     # JSON
     ####################
 
-    json_schema: object = load_schema('/home/pilar/Documents/PhD/git-delacruz/delacruz/py_attentional_trees/py_trees/schemas/pickandplace_schema_emphasis.json')
+    json_schema: object = load_schema('/home/pilar/Documents/PhD/git-delacruz/delacruz/py_attentional_trees/py_trees/schemas/pickandplace_schema_pa-bt.json')
 
     ####################
     # TREE EXPANSION
     ####################
 
-    # -len(some_list) gives you the first element of a list. end of schema will be reached when schema list yields an
-    # index -1
-    tree_layer = -len(json_schema)
-
-    # create root
-    root = create_root_from_schema(schema=json_schema, layer=tree_layer)
-
-    # expand subtrees
-    while tree_layer < -1:
-        root_subtree = create_root_from_schema(schema=json_schema, layer=(tree_layer+1))
-        subtree = expand_subtrees(schema=json_schema, tree_layer=(tree_layer+1), root=root_subtree)
-        # add subtree to root
-        root.add_child(subtree)
-        # update tree layer
-        tree_layer += 1
-
+    root = py_trees.idioms.task_planner(
+        name="Task Planner Demo",
+        schema=json_schema
+    )
 
     ####################
     # Rendering

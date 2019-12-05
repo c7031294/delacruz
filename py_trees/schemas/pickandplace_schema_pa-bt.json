@@ -4,7 +4,7 @@
     "type":"selector",
     "father": "sequence01",
     "children": ["isReached","reach"],
-    "parameters": ["distanceToObject", "emphasis", "reached"]
+    "parameters": ["reached", "distanceToObject", "emphasis"]
   },
   {
     "name":"selector02",

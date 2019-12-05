@@ -24,15 +24,13 @@
 
 import argparse
 import functools
-from typing import List, Any
-
-import py_trees
+import json
 import sys
 import time
-import json
-import pdb
 
+import py_trees
 import py_trees.console as console
+
 
 ##############################################################################
 # JSON
@@ -164,8 +162,8 @@ def expand_subtrees(schema, root, tree_layer):
 
 def main():
     """
-        Entry point for the demo script.
-        """
+    Entry point for the demo script.
+    """
     args = command_line_argument_parser().parse_args()
     py_trees.logging.level = py_trees.logging.Level.DEBUG
 
@@ -187,20 +185,13 @@ def main():
     root = create_root_from_schema(schema=json_schema, layer=tree_layer)
 
     # expand subtrees
-    #while tree_layer < -1:
-    #root_subtree = create_root_from_schema(schema=json_schema, layer=(tree_layer+1))
-    #subtree = expand_subtrees(schema=json_schema, tree_layer=(tree_layer+1), root=root_subtree)
-    # add subtree to root
-    #root.add_child(subtree)
-    # update tree layer
-    #tree_layer += 1
-
-    idiom_tree = py_trees.idioms.task_planner(
-        name="Task Planner demo",
-        schema=json_schema
-    )
-
-    root.add_children(idiom_tree)
+    while tree_layer < -1:
+        root_subtree = create_root_from_schema(schema=json_schema, layer=(tree_layer+1))
+        subtree = expand_subtrees(schema=json_schema, tree_layer=(tree_layer+1), root=root_subtree)
+        # add subtree to root
+        root.add_child(subtree)
+        # update tree layer
+        tree_layer += 1
 
 
     ####################

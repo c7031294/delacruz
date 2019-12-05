@@ -1,0 +1,61 @@
+digraph pastafarianism {
+graph [fontname="times-roman"];
+node [fontname="times-roman"];
+edge [fontname="times-roman"];
+"Task Planner Demo" [fillcolor=orange, fontcolor=black, fontsize=9, label="Task Planner Demo", shape=box, style=filled];
+selector01 [fillcolor=cyan, fontcolor=black, fontsize=9, label=selector01, shape=octagon, style=filled];
+"Task Planner Demo" -> selector01;
+isReached [fillcolor=gray, fontcolor=black, fontsize=9, label=isReached, shape=ellipse, style=filled];
+selector01 -> isReached;
+"isReached*" [fillcolor=orange, fontcolor=black, fontsize=9, label="isReached*", shape=box, style=filled];
+selector01 -> "isReached*";
+reach [fillcolor=gray, fontcolor=black, fontsize=9, label=reach, shape=ellipse, style=filled];
+"isReached*" -> reach;
+reached [fillcolor=gray, fontcolor=black, fontsize=9, label=reached, shape=ellipse, style=filled];
+"isReached*" -> reached;
+subgraph  {
+label=children_of_isReached;
+rank=same;
+reach [fillcolor=gray, fontcolor=black, fontsize=9, label=reach, shape=ellipse, style=filled];
+reached [fillcolor=gray, fontcolor=black, fontsize=9, label=reached, shape=ellipse, style=filled];
+}
+
+subgraph  {
+label=children_of_selector01;
+rank=same;
+isReached [fillcolor=gray, fontcolor=black, fontsize=9, label=isReached, shape=ellipse, style=filled];
+"isReached*" [fillcolor=orange, fontcolor=black, fontsize=9, label="isReached*", shape=box, style=filled];
+}
+
+selector02 [fillcolor=cyan, fontcolor=black, fontsize=9, label=selector02, shape=octagon, style=filled];
+"Task Planner Demo" -> selector02;
+isPicked [fillcolor=gray, fontcolor=black, fontsize=9, label=isPicked, shape=ellipse, style=filled];
+selector02 -> isPicked;
+"isPicked*" [fillcolor=orange, fontcolor=black, fontsize=9, label="isPicked*", shape=box, style=filled];
+selector02 -> "isPicked*";
+pick [fillcolor=gray, fontcolor=black, fontsize=9, label=pick, shape=ellipse, style=filled];
+"isPicked*" -> pick;
+picked [fillcolor=gray, fontcolor=black, fontsize=9, label=picked, shape=ellipse, style=filled];
+"isPicked*" -> picked;
+subgraph  {
+label=children_of_isPicked;
+rank=same;
+pick [fillcolor=gray, fontcolor=black, fontsize=9, label=pick, shape=ellipse, style=filled];
+picked [fillcolor=gray, fontcolor=black, fontsize=9, label=picked, shape=ellipse, style=filled];
+}
+
+subgraph  {
+label=children_of_selector02;
+rank=same;
+isPicked [fillcolor=gray, fontcolor=black, fontsize=9, label=isPicked, shape=ellipse, style=filled];
+"isPicked*" [fillcolor=orange, fontcolor=black, fontsize=9, label="isPicked*", shape=box, style=filled];
+}
+
+subgraph  {
+label="children_of_Task Planner Demo";
+rank=same;
+selector01 [fillcolor=cyan, fontcolor=black, fontsize=9, label=selector01, shape=octagon, style=filled];
+selector02 [fillcolor=cyan, fontcolor=black, fontsize=9, label=selector02, shape=octagon, style=filled];
+}
+
+}
