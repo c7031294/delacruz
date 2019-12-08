@@ -5,26 +5,33 @@
 \usepackage{amsmath,amssymb,amsfonts}
 %\usepackage{algorithmic}
 \usepackage{graphicx}
+\usepackage{svg}
 \usepackage{textcomp}
 \usepackage{xcolor}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
 
-\title{Attentional Trees And Robotics: Towards an Optimal Executive Framework Meeting High-level Decision Making and Control Layer Features.\\
+\title{Attentional Trees And Robotics: Towards an Executive Framework Meeting High-level Decision Making and Control Layer Features.\\
 }
 
-\author{\IEEEauthorblockN{1\textsuperscript{st} Pilar de la Cruz}
+\author{\IEEEauthorblockN{\textsuperscript{st} Pilar de la Cruz}
 \IEEEauthorblockA{\textit{Intelligent And Interactive Systems Department} \\
 \textit{University of Innsbruck}\\
 Innsbruck, Austria \\
 pilar.de-la-cruz@uibk.ac.at}
 \and
-\IEEEauthorblockN{2\textsuperscript{nd} Matteo Saveriano}
+\IEEEauthorblockN{\textsuperscript{nd} Matteo Saveriano}
 \IEEEauthorblockA{\textit{Intelligent And Interactive Systems Department} \\
 \textit{University of Innsbruck}\\
 Innsbruck, Austria \\
 matteo.saveriano@uibk.ac.at}
+\and
+\IEEEauthorblockN{\textsuperscript{nd} Justus Piater}
+\IEEEauthorblockA{\textit{Intelligent And Interactive Systems Department} \\
+\textit{University of Innsbruck}\\
+Innsbruck, Austria \\
+justus.piater@uibk.ac.at}
 }
 
 \maketitle
@@ -44,26 +51,34 @@ behavior trees, robotics, event-based, json
 \item Priority Handling - switching mechansims that allow higher priority interruptions is very natural
 \item Simplicity - very few core components, making it easy for designers to work with it
 \item Dynamic - change the graph on the fly, between ticks or from parent behaviours themselves
+\item Self-explainable
 \end{itemize}
 \subsection{Behavior Trees Limitations (Brainstorm)}
 \subsection{How Limitations can be overcome: JSON (Brainstorm)}
-JSON is a standard format for data exchange inspired by JavaScript. Generally, JSON is in string or text format.
-This schema provides (1) simplicity due to its compact description of information, (2) flexibility due to its abstract base representation of tasks and (3) modularity due to the definition of subtrees which can be added and/orremoved on the fly in whatever position of Behavior Tree.
+JSON is a standard format for data exchange inspired by JavaScript. Generally, JSON is in string or text format. (EXTEND overview)
+JSON schemas provide (1) simplicity due to its compact description of information, (2) flexibility due to its abstract base representation of tasks and (3) modularity due to the definition of subtrees which can be added and/or removed on the fly in whatever position of Behavior Tree.  Finally, JSON support with databsaes such as mySQL and MongoDB motivates the fact of bringing up a general string schema which couples not only task executions but also an abstract knowledge representation of actions.  
 \subsection{What is this document about (Brainstorm)}
 \subsection{Describe Sections Structure and Content}
 \section{Related Works}
 Add Matteo's system. Add SoA Behavior Trees.
-
+\begin{itemize}
+\item Matteo's system: Refer to Method's section. 
+\end{itemize}
 
 \section{System Overview}
 Attentional Trees framework aims at integrating the following features:
 \begin{enumerate}
-\item JSON schema conversion into Behavior Trees 
 \item Task planner based on Behavior Trees
-\item Priority handling of tasks based on the emphasis value \cite{b2}
-\item Event-based approach of Behavior Tree  execution
+\item Priority handling of tasks based on attentional mechanisms and emphasis \cite{b2}
+\item JSON schema conversion into Behavior Trees 
+%\item Event-based approach of Behavior Tree  execution
 \end{enumerate}
-\subsubsection{JSON Schema}
+
+\subsection{Task Planning}
+\subsection{Priority Handling}
+\subsubsection{Attentional Mechanism}
+\subsubsection{Emphasis}
+\subsection{JSON Schema}
  A typical JSON schema consists of a list of string objects. The first object element defines the root of the Behavior Tree. The remaining object elements are defined as subtrees and will be added recursively as children from the root. Each object contains properties \verb|name|, \verb|type|, \verb|father|, \verb|children| and \verb|parameters|, which provide with information about the Behavior Tree node types as well as additional attributes for pre-and post-conditioning handling, priority execution and any additional information. 
  
  \begin{verbatim}
@@ -77,13 +92,20 @@ Attentional Trees framework aims at integrating the following features:
 
 
 \end{verbatim}
-\subsection{Task Planning}
-\subsection{Priority Handling}
+
 \subsection{Event-Based Behavior Tree}
 
 \section{Implementation}
 The framework platform of Attentional Trees is based on the open-source library py$\_$trees \cite{b4}. py$\_$trees is compatible with ROS and provides the easiness and quickness of an implementation based in python language. Moreover, decoding operations becomes specially intuitive thanks to the in-built mapping between container and value (JSON objects to Python objects and viceversa) based on Python standard libraries.
+*Note: justify the contribution of our work to the library 
 \subsection{py tree Overview (Brainstorm)}
+\begin{itemize}
+\item idioms for PA-BT creation
+\item blackboard and emphasis for attentional mechanism
+\item trees and behavior classes
+\item demo overviews
+
+\end{itemize}
 \subsection{Adapting Procedure (Brainstorm)}
 \begin{itemize}
 \item reasoning of applied demos as basis
@@ -97,17 +119,27 @@ The framework platform of Attentional Trees is based on the open-source library 
 
 \section{Simulations}
 In order to test the requirements described in section above, the following demo programs have been implemented\footnote{These are available on:}
+
+
 \begin{itemize}
 \item \verb|json-tree.py|. This program focuses on (1) loading JSON schema and (2) mapping into a Behavior Tree based on PA-BT approach \cite{b3}.
+*Note: currently (8.12.2019) PA-BT is extended via \verb|automated-panning.py| demo. \verb|json-tree.py| provides with a Behavior Tree extension following a minimal implementation and no use of idioms.
+%\begin{figure}
+ % \includesvg{pa-bt}
+ % \caption{Tree expansion rendered from json schema rendered in .dot graph}
+  %\label{fig:json-tree}
+%\end{figure}
 
-\begin{figure}
-  \includegraphics[width=\linewidth]{demo-json.png}
-  \caption{Tree expansion rendered from json schema rendered in .dot graph}
-  \label{fig:json-tree}
-\end{figure}
 
-\item \verb|emphasis-tree.py|. This program focuses on high-priority handling based on access to emphasis value\cite{b1}.
-\item \verb|attentional-tree.py|. This program focuses on event-based task execution of Behavior Trees. Tick signals are not periodically sent, but triggered by special events handled in the control layer.
+%\begin{figure}
+ % \includesvg{sequence01}
+ % \caption{Tree expansion rendered from json schema rendered in .dot graph}
+ % \label{fig:json-tree}
+%\end{figure}
+\item \verb|attentional-tree.py|. This program focuses on high-priority handling based on access to emphasis value\cite{b1}.
+
+%\item \verb|automated-planning.py|. This program creates an extension of an behavior on the fly. It uses the idioms feature of library py$\_$tree. 
+%\item \verb|attentional-tree.py|. This program focuses on event-based task execution of Behavior Trees. Tick signals are not periodically sent, but triggered by special events handled in the control layer.
 \end{itemize}
 \section*{Discussion}
 
