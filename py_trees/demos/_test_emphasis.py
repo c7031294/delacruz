@@ -26,17 +26,73 @@
 ##############################################################################
 # Imports
 ##############################################################################
-
 import argparse
 import py_trees
+import py_trees.console as console
+
 import sys
 
-import py_trees.console as console
+
+class Parameters(object):
+    def __init__(self):
+        self.distance_to_object = 0
+        self.alpha = 1
+        self.beta = 0
+
+    def __str__(self):
+        return str(self.__dict__)
+
+
+class ParamsAndState(py_trees.behaviour.Behaviour):
+    """
+    A more esotoric use of multiple blackboards in a behaviour to represent
+    storage of parameters and state.
+    """
+
+    def __init__(self, name="ParamsAndState"):
+        super().__init__(name=name)
+        # namespaces can include the separator or may leave it out
+        # they can also be nested, e.g. /agent/state, /agent/parameters
+        self.parameters = self.attach_blackboard_client("Params", "parameters")
+        self.state = self.attach_blackboard_client("State", "state")
+        self.parameters.register_key(
+            key="distance_to_object",
+            access=py_trees.common.Access.READ
+        )
+        self.parameters.register_key(
+            key="alpha",
+            access=py_trees.common.Access.READ
+        )
+        self.parameters.register_key(
+            key="beta",
+            access=py_trees.common.Access.READ
+        )
+
+        self.state.register_key(
+            key="emphasis",
+            access=py_trees.common.Access.WRITE
+        )
+
+    def initialise(self):
+        try:
+            self.blackboard.set("distance_to_object", {"rmin": 0.001, "rmax": 1.5}, overwrite=False)
+            self.blackboard.set("")
+            self.state.emphasis = self.parameters.distanceToObject[0]
+        except KeyError as e:
+            raise RuntimeError("parameter 'distance_to_object' not found [{}]".format(str(e)))
+
+    def update(self):
+        # if self.state.emphasis ! rmax and
+        if 0.001 < self.state.emphasis < 1.5:
+            return py_trees.common.Status.SUCCESS
+        else:
+            self.state.emphasis += self.parameters.alpha * self.parameters.distance_to_object + self.parameters.beta
+            return py_trees.common.Status.RUNNING
+
 
 ##############################################################################
 # Classes
 ##############################################################################
-
 
 def description():
     content = "Demonstrates usage of the blackboard and related behaviours.\n"
@@ -81,26 +137,20 @@ def command_line_argument_parser():
     return parser
 
 
-class EmphasisObject(object):
-    """
-    A more complex object to interact with on the blackboard.
-    """
-    def __init__(self):
-        self.emphasis = 1.0
-
-    def __str__(self):
-        return str({"emphasis": self.emphasis})
-
 
 class BlackboardWriter(py_trees.behaviour.Behaviour):
     """
     Custom writer that submits a more complicated variable to the blackboard.
     """
-    def __init__(self, name="Writer"):
+    def __init__(self, name="SetAttention"):
         super().__init__(name=name)
         self.blackboard = self.attach_blackboard_client()
-        self.blackboard.register_key(key="DistanceToObject", access=py_trees.common.Access.READ)
-        self.blackboard.register_key(key="spaghetti", access=py_trees.common.Access.WRITE)
+        set_parameters = py_trees.behaviours.SetBlackboardVariable(
+            name = "Set Parameters", variable_name = "parameters", variable_value = Parameters()
+        )
+
+        #self.blackboard.register_key(key="DistanceToObject", access=py_trees.common.Access.READ)
+        self.blackboard.register_key(key="parameters", access=py_trees.common.Access.WRITE)
 
         self.logger.debug("%s.__init__()" % (self.__class__.__name__))
 
@@ -121,8 +171,7 @@ class BlackboardWriter(py_trees.behaviour.Behaviour):
             self.blackboard.dudette = "Jane"
         except AttributeError:
             pass
-        self.blackboard.spaghetti = {"type": "Carbonara", "quantity": 1}
-        self.blackboard.spaghetti = {"type": "Gnocchi", "quantity": 2}
+        self.blackboard.parameters = set
         try:
             self.blackboard.set("spaghetti", {"type": "Bolognese", "quantity": 3}, overwrite=False)
         except AttributeError:
@@ -130,57 +179,21 @@ class BlackboardWriter(py_trees.behaviour.Behaviour):
         return py_trees.common.Status.SUCCESS
 
 
-class ParamsAndState(py_trees.behaviour.Behaviour):
-    """
-    A more esotoric use of multiple blackboards in a behaviour to represent
-    storage of parameters and state.
-    """
-    def __init__(self, name="ParamsAndState"):
-        super().__init__(name=name)
-        # namespaces can include the separator or may leave it out
-        # they can also be nested, e.g. /agent/state, /agent/parameters
-        self.parameters = self.attach_blackboard_client("Params", "parameters")
-        self.state = self.attach_blackboard_client("State", "state")
-        self.parameters.register_key(
-            key="default_speed",
-            access=py_trees.common.Access.READ
-        )
-        self.state.register_key(
-            key="current_speed",
-            access=py_trees.common.Access.WRITE
-        )
-
-    def initialise(self):
-        try:
-            self.state.current_speed = self.parameters.default_speed
-        except KeyError as e:
-            raise RuntimeError("parameter 'default_speed' not found [{}]".format(str(e)))
-
-    def update(self):
-        if self.state.current_speed > 40.0:
-            return py_trees.common.Status.SUCCESS
-        else:
-            self.state.current_speed += 1.0
-            return py_trees.common.Status.RUNNING
 
 
 def create_root():
     root = py_trees.composites.Sequence("Blackboard Demo Access to Emphasis")
-    set_blackboard_variable = py_trees.behaviours.SetBlackboardVariable(
-        name="Set Emphasis", variable_name="emphasis", variable_value=Nested()
-    )
-    write_blackboard_variable = BlackboardWriter(name="Writer")
-    check_blackboard_variable = py_trees.behaviours.CheckBlackboardVariableValue(
-        name="Check Nested Foo", variable_name="nested.foo", expected_value="bar"
-    )
+
+    # write_blackboard_variable = BlackboardWriter(name="Writer")
+
     params_and_state = ParamsAndState()
     root.add_children([
-        set_blackboard_variable,
-        write_blackboard_variable,
-        check_blackboard_variable,
+
+        # write_blackboard_variable,
         params_and_state
     ])
     return root
+
 
 ##############################################################################
 # Main
@@ -197,10 +210,16 @@ def main():
     py_trees.blackboard.Blackboard.enable_activity_stream(maximum_size=100)
     # before: configuration
     blackboard = py_trees.blackboard.Client(name="AttentionalMechanism")
-    #blackboard.register_key(key="dude", access=py_trees.common.Access.WRITE)
-    blackboard.register_key(key="/parameters/emphasis", access=py_trees.common.Access.WRITE)
-    #blackboard.emphasis = "1"
-    blackboard.parameters.emphasis = 1.0
+    #parameters = py_trees.blackboard.Client(name="Parameters", namespace="parameters")
+    # blackboard.register_key(key="dude", access=py_trees.common.Access.WRITE)
+    # this should be made in writer behavior
+    blackboard.register_key(key="/parameters/distance_to_object", access=py_trees.common.Access.WRITE)
+    blackboard.register_key(key="/parameters/alpha", access=py_trees.common.Access.WRITE)
+    blackboard.register_key(key="/parameters/beta", access=py_trees.common.Access.WRITE)
+    # blackboard.emphasis = "1"
+    blackboard.parameters.distance_to_object = 0.5
+    blackboard.parameters.alpha = 1
+    blackboard.parameters.beta = 0
 
     root = create_root()
 
@@ -219,7 +238,7 @@ def main():
     ####################
     root.setup_with_descendants()
     unset_blackboard = py_trees.blackboard.Client(name="Unsetter")
-    unset_blackboard.register_key(key="foo", access=py_trees.common.Access.WRITE)
+    unset_blackboard.register_key(key="emphasis", access=py_trees.common.Access.WRITE)
     print("\n--------- Tick 0 ---------\n")
     root.tick_once()
     print("\n")
@@ -229,5 +248,5 @@ def main():
     print("--------------------------\n")
     print(py_trees.display.unicode_blackboard(display_only_key_metadata=True))
     print("--------------------------\n")
-    unset_blackboard.unset("foo")
+    unset_blackboard.unset("emphasis")
     print(py_trees.display.unicode_blackboard_activity_stream())

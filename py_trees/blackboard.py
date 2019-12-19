@@ -200,6 +200,7 @@ class Blackboard(object):
     activity_stream = None
     separator = "/"
 
+
     @staticmethod
     def keys() -> typing.Set[str]:
         """
@@ -261,6 +262,7 @@ class Blackboard(object):
         variable_name = Blackboard.absolute_name(Blackboard.separator, variable_name)
         name_components = variable_name.split('.')
         key = name_components[0]
+        # attributes would be the members of the list
         key_attributes = '.'.join(name_components[1:])
         if not key_attributes:
             Blackboard.storage[key] = value

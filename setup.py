@@ -71,7 +71,10 @@ d = setup(
             'py-trees-demo-sequence = py_trees.demos.sequence:main',
             'py-trees-demo-tree-stewardship = py_trees.demos.stewardship:main',
             'py-trees-demo-expand-tree-json = py_trees.demos.test_expand_tree_json:main',
-            'py-trees-demo-automated-planning = py_trees.demos.test_automated_planning:main'
+            'py-trees-demo-automated-planning = py_trees.demos.test_automated_planning:main',
+            'py-trees-demo-emphasis = py_trees.demos.test_emphasis:main',
+            'py-trees-demo-prepare-coffee = py_trees.demos.test_prepare_coffee:main',
+
         ],
     },
 )

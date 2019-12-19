@@ -1,0 +1,25 @@
+[
+  {
+    "name":"water",
+    "type":"selector",
+    "father": "sequence01",
+    "children": ["Poured?","pour_water"],
+    "parameters": ["poured_water", {"distance_to_object": 1.5, "emphasis_water": 1.5}]
+  },
+  {
+    "name":"coffee",
+    "type":"selector",
+    "father": "sequence01",
+    "children": ["Poured?","pour_coffee"],
+    "parameters": ["poured_coffee", {"distance_to_object": 1, "emphasis_coffee": 1.0}]
+  },
+  {
+    "name":"spoon",
+    "type":"selector",
+
+    "father": "sequence01",
+    "children": ["Mixed?","mix_coffee"],
+    "parameters": ["mixed_coffee", {"distance_to_object": 0.5, "emphasis_spoon": 0.5}]
+  }
+
+]

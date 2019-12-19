@@ -1,5 +1,25 @@
-Approach 1a
-1. create a list of subtrees
-2. add the subtrees to root in order
-    2.1. specify the overall root
-    2.2. when subtree is added to list, look for its root and add it to overall root
+In my schema I have the parameters hardcoded
+Writer is the communication to the outside world:
+ it is responsible for setting bottom-up parameters distance_to_object, rmin, rmax, alpha, beta
+ to the blackboard.
+ These parameters are read from an independent json string
+Once the parameters are set in the blackboard, ParamAndState reads these and set an emphasis value
+for each task node:
+  - ParamAndState needs to know from which object is the distance calculated - it reads it from blackboard
+  - It sets a simple emphasis value in the blackboard/json string (?) -> blackboard
+        - namespace parameters/emphasis/emphasis_node
+Task planner expands the tree corresponding to the emphasis value:
+- it needs to read the emphasis for each node: read it from json string or from blackboard?
+    - difference computation access? probably from blackboard is quicker
+        - in case it is loaded from blackboard: ParamState sets emphasis_node blackboard variable in an emphasis list
+        - in case it is loaded from json string: ParamStates loads json schema, checks emphasis and writes it to the blackboard
+- it needs to select the highest emphasis
+which kind of emphasis?
+- emphasis/nodes
+- in each tick, you call Writer and ParamAndState. ParamAndState sets the highest emphasis
+- in each tick, you create a behavior tree for prepare coffee task
+- task planner:
+    - you need to load selector_water/coffee/spoon depending on emphasis
+    - what happens with the post-condition?
+        - check post-condition in blackboard
+

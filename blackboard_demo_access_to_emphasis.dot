@@ -1,0 +1,20 @@
+digraph pastafarianism {
+graph [fontname="times-roman"];
+node [fontname="times-roman"];
+edge [fontname="times-roman"];
+"Blackboard Demo Access to Emphasis" [fillcolor=orange, fontcolor=black, fontsize=9, label="Blackboard Demo Access to Emphasis", shape=box, style=filled];
+"Set Emphasis" [fillcolor=gray, fontcolor=black, fontsize=9, label="Set Emphasis", shape=ellipse, style=filled];
+"Blackboard Demo Access to Emphasis" -> "Set Emphasis";
+"Check Emphasis" [fillcolor=gray, fontcolor=black, fontsize=9, label="Check Emphasis", shape=ellipse, style=filled];
+"Blackboard Demo Access to Emphasis" -> "Check Emphasis";
+ParamsAndState [fillcolor=gray, fontcolor=black, fontsize=9, label=ParamsAndState, shape=ellipse, style=filled];
+"Blackboard Demo Access to Emphasis" -> ParamsAndState;
+subgraph  {
+label="children_of_Blackboard Demo Access to Emphasis";
+rank=same;
+"Set Emphasis" [fillcolor=gray, fontcolor=black, fontsize=9, label="Set Emphasis", shape=ellipse, style=filled];
+"Check Emphasis" [fillcolor=gray, fontcolor=black, fontsize=9, label="Check Emphasis", shape=ellipse, style=filled];
+ParamsAndState [fillcolor=gray, fontcolor=black, fontsize=9, label=ParamsAndState, shape=ellipse, style=filled];
+}
+
+}

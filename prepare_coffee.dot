@@ -1,0 +1,66 @@
+digraph pastafarianism {
+graph [fontname="times-roman"];
+node [fontname="times-roman"];
+edge [fontname="times-roman"];
+"Prepare Coffee" [fillcolor=gold, fontcolor=black, fontsize=9, label="Prepare Coffee\n--SuccessOnAll(⚡)--", shape=parallelogram, style=filled];
+"Check Emphasis" [fillcolor=orange, fontcolor=black, fontsize=9, label="Check Emphasis", shape=box, style=filled];
+"Prepare Coffee" -> "Check Emphasis";
+Writer [fillcolor=gray, fontcolor=black, fontsize=9, label=Writer, shape=ellipse, style=filled];
+"Check Emphasis" -> Writer;
+SetEmphasizedObject [fillcolor=gray, fontcolor=black, fontsize=9, label=SetEmphasizedObject, shape=ellipse, style=filled];
+"Check Emphasis" -> SetEmphasizedObject;
+subgraph  {
+label="children_of_Check Emphasis";
+rank=same;
+Writer [fillcolor=gray, fontcolor=black, fontsize=9, label=Writer, shape=ellipse, style=filled];
+SetEmphasizedObject [fillcolor=gray, fontcolor=black, fontsize=9, label=SetEmphasizedObject, shape=ellipse, style=filled];
+}
+
+"Emphasized Tree" [fillcolor=orange, fontcolor=black, fontsize=9, label="Emphasized Tree", shape=box, style=filled];
+"Prepare Coffee" -> "Emphasized Tree";
+water [fillcolor=cyan, fontcolor=black, fontsize=9, label=water, shape=octagon, style=filled];
+"Emphasized Tree" -> water;
+"Poured?" [fillcolor=gray, fontcolor=black, fontsize=9, label="Poured?", shape=ellipse, style=filled];
+water -> "Poured?";
+"Poured?*" [fillcolor=orange, fontcolor=black, fontsize=9, label="Poured?*", shape=box, style=filled];
+water -> "Poured?*";
+pour_water [fillcolor=gray, fontcolor=black, fontsize=9, label=pour_water, shape=ellipse, style=filled];
+"Poured?*" -> pour_water;
+poured_water [fillcolor=gray, fontcolor=black, fontsize=9, label=poured_water, shape=ellipse, style=filled];
+"Poured?*" -> poured_water;
+subgraph  {
+label="children_of_Poured?";
+rank=same;
+pour_water [fillcolor=gray, fontcolor=black, fontsize=9, label=pour_water, shape=ellipse, style=filled];
+poured_water [fillcolor=gray, fontcolor=black, fontsize=9, label=poured_water, shape=ellipse, style=filled];
+}
+
+subgraph  {
+label=children_of_water;
+rank=same;
+"Poured?" [fillcolor=gray, fontcolor=black, fontsize=9, label="Poured?", shape=ellipse, style=filled];
+"Poured?*" [fillcolor=orange, fontcolor=black, fontsize=9, label="Poured?*", shape=box, style=filled];
+}
+
+subgraph  {
+label="children_of_Prepare Coffee";
+rank=same;
+"Check Emphasis" [fillcolor=orange, fontcolor=black, fontsize=9, label="Check Emphasis", shape=box, style=filled];
+"Emphasized Tree" [fillcolor=orange, fontcolor=black, fontsize=9, label="Emphasized Tree", shape=box, style=filled];
+}
+
+"Read Emphasized Object for Tree Expansion" [color=blue, fillcolor=gray, fontcolor=blue, fontsize=7, label="Read Emphasized Object for Tree Expansion", shape=ellipse, style=filled];
+"/parameters/emphasis_list" [color=blue, fillcolor=white, fixedsize=False, fontcolor=blue, fontsize=8, height=0, label="/parameters/emphasis_list: -", shape=box, style=filled, width=0];
+"/parameters/emphasis_list" -> SetEmphasizedObject  [color=blue, constraint=False];
+Writer -> "/parameters/emphasis_list"  [color=blue, constraint=True];
+"/parameters/object" [color=blue, fillcolor=white, fixedsize=False, fontcolor=blue, fontsize=8, height=0, label="/parameters/object: water", shape=box, style=filled, width=0];
+"/parameters/object" -> "Read Emphasized Object for Tree Expansion"  [color=blue, constraint=False];
+SetEmphasizedObject -> "/parameters/object"  [color=blue, constraint=True];
+Writer -> "/parameters/object"  [color=blue, constraint=True];
+"/parameters/emphasis" [color=blue, fillcolor=white, fixedsize=False, fontcolor=blue, fontsize=8, height=0, label="/parameters/emphasis: -", shape=box, style=filled, width=0];
+SetEmphasizedObject -> "/parameters/emphasis"  [color=blue, constraint=True];
+"/Poured?" [color=blue, fillcolor=white, fixedsize=False, fontcolor=blue, fontsize=8, height=0, label="/Poured?: -", shape=box, style=filled, width=0];
+"/Poured?" -> "Poured?"  [color=blue, constraint=False];
+"/poured_water" [color=blue, fillcolor=white, fixedsize=False, fontcolor=blue, fontsize=8, height=0, label="/poured_water: -", shape=box, style=filled, width=0];
+poured_water -> "/poured_water"  [color=blue, constraint=True];
+}

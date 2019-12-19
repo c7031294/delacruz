@@ -25,3 +25,5 @@ from . import sequence  # noqa
 from . import stewardship  # noqa
 from . import test_expand_tree_json # noqa
 from . import test_automated_planning # noqa
+from . import test_emphasis # noqa
+from . import test_prepare_coffee # noqa

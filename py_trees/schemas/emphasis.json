@@ -1,0 +1,6 @@
+{
+    "name":"check_emphasis_subtree",
+    "parameters": {"distance_to_object": 1.7,"emphasis_list": {"emphasis_water": 1.0, "emphasis_coffee": 2.0, "emphasis_spoon": 1.0}, "object":"spoon", "alpha": 1, "beta": 0, "rmin": 0.001, "rmax": 20}
+
+}
+

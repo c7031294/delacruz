@@ -32,18 +32,61 @@ import pdb
 # Creational Methods
 ##############################################################################
 
+def emphasized_tree(name, object, schema):
+
+    root = composites.Sequence(name=name)
+    layers_schema = -len(schema)
+
+    task_layer = 0
+    # retrieve subtree with emphasized task from schema
+    while layers_schema < -1:
+        if schema[layers_schema]['name'] == object:
+            task_layer = layers_schema
+        layers_schema += 1
+
+    # expand subtree based on PA-BT spproach
+    tasks = schema[task_layer]['children']
+    task_parameters= schema[task_layer]['parameters']
+    for t in range(0, len(tasks)-1):
+        # task
+        task = behaviours.Count(
+            name=tasks[t+1],
+            fail_until=0,
+            running_until=2,
+            success_until=10
+        )
+    task_selector = composites.Selector(name=schema[task_layer]['name'])
+    # task guard
+    pre_condition = behaviours.CheckBlackboardVariableValue(
+        name=tasks[t],
+        variable_name=tasks[t],
+        expected_value=True
+    )
+    sequence = composites.Sequence(name=tasks[t])
+    # mark task done
+    post_condition = behaviours.SetBlackboardVariable(
+        name=task_parameters[0],
+        variable_name=task_parameters[0],
+        variable_value=True
+    )
+
+    sequence.add_children([task, post_condition])
+    task_selector.add_children([pre_condition, sequence])
+    root.add_child(task_selector)
+
+    return root
+
 def task_planner(name, schema):
 
     root = composites.Sequence(name=name)
     task_layer = -len(schema)
-    #pdb.set_trace()
-    task_layer = task_layer
+
     while task_layer < -1:
         tasks = schema[task_layer]['children']
         task_parameters = schema[task_layer]['parameters']
        # pdb.set_trace()
 
-        for t in range(0,len(tasks)-1):
+        for t in range(0, len(tasks)-1):
             # task
             task = behaviours.Count(
                 name=tasks[t+1],

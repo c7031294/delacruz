@@ -1,0 +1,24 @@
+[
+  {
+    "name": "CheckEmphasis",
+    "type": "parallel",
+    "father": "",
+    "children": ["Writer","ParamsAndState"],
+    "emphasis_parameters": {"rmin": 0.001, "rmax": 10, "alpha": 1, "beta": 0}
+  },
+  {
+    "name":"Writer",
+    "type":"sequence",
+    "father": "CheckEmphasis",
+    "children": [],
+    "parameters": []
+  },
+  {
+    "name":"ParamsAndState",
+    "type":"sequence",
+    "father": "CheckEmphasis",
+    "children": [],
+    "parameters": []
+  }
+
+]
