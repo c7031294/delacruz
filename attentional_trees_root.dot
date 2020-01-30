@@ -1,0 +1,50 @@
+digraph pastafarianism {
+graph [fontname="times-roman"];
+node [fontname="times-roman"];
+edge [fontname="times-roman"];
+"Attentional Trees Root" [fillcolor=orange, fontcolor=black, fontsize=9, label="Attentional Trees Root", shape=box, style=filled];
+"Initialise Blackboard Subtree" [fillcolor=orange, fontcolor=black, fontsize=9, label="Initialise Blackboard Subtree", shape=box, style=filled];
+"Attentional Trees Root" -> "Initialise Blackboard Subtree";
+"Initialise PreCondition List in Blackboard" [fillcolor=cyan, fontcolor=black, fontsize=9, label="Initialise PreCondition List in Blackboard", shape=octagon, style=filled];
+"Initialise Blackboard Subtree" -> "Initialise PreCondition List in Blackboard";
+CheckBlackboardVariableExists [fillcolor=gray, fontcolor=black, fontsize=9, label=CheckBlackboardVariableExists, shape=ellipse, style=filled];
+"Initialise PreCondition List in Blackboard" -> CheckBlackboardVariableExists;
+"Pre-Post-Condition Handling" [fillcolor=gray, fontcolor=black, fontsize=9, label="Pre-Post-Condition Handling", shape=ellipse, style=filled];
+"Initialise PreCondition List in Blackboard" -> "Pre-Post-Condition Handling";
+subgraph  {
+label="children_of_Initialise PreCondition List in Blackboard";
+rank=same;
+CheckBlackboardVariableExists [fillcolor=gray, fontcolor=black, fontsize=9, label=CheckBlackboardVariableExists, shape=ellipse, style=filled];
+"Pre-Post-Condition Handling" [fillcolor=gray, fontcolor=black, fontsize=9, label="Pre-Post-Condition Handling", shape=ellipse, style=filled];
+}
+
+"Initialise Postcondition List in Blackboard" [fillcolor=cyan, fontcolor=black, fontsize=9, label="Initialise Postcondition List in Blackboard", shape=octagon, style=filled];
+"Initialise Blackboard Subtree" -> "Initialise Postcondition List in Blackboard";
+"CheckBlackboardVariableExists*" [fillcolor=gray, fontcolor=black, fontsize=9, label="CheckBlackboardVariableExists*", shape=ellipse, style=filled];
+"Initialise Postcondition List in Blackboard" -> "CheckBlackboardVariableExists*";
+"Pre-Post-Condition Handling*" [fillcolor=gray, fontcolor=black, fontsize=9, label="Pre-Post-Condition Handling*", shape=ellipse, style=filled];
+"Initialise Postcondition List in Blackboard" -> "Pre-Post-Condition Handling*";
+subgraph  {
+label="children_of_Initialise Postcondition List in Blackboard";
+rank=same;
+"CheckBlackboardVariableExists*" [fillcolor=gray, fontcolor=black, fontsize=9, label="CheckBlackboardVariableExists*", shape=ellipse, style=filled];
+"Pre-Post-Condition Handling*" [fillcolor=gray, fontcolor=black, fontsize=9, label="Pre-Post-Condition Handling*", shape=ellipse, style=filled];
+}
+
+subgraph  {
+label="children_of_Initialise Blackboard Subtree";
+rank=same;
+"Initialise PreCondition List in Blackboard" [fillcolor=cyan, fontcolor=black, fontsize=9, label="Initialise PreCondition List in Blackboard", shape=octagon, style=filled];
+"Initialise Postcondition List in Blackboard" [fillcolor=cyan, fontcolor=black, fontsize=9, label="Initialise Postcondition List in Blackboard", shape=octagon, style=filled];
+}
+
+End [fillcolor=gray, fontcolor=black, fontsize=9, label=End, shape=ellipse, style=filled];
+"Attentional Trees Root" -> End;
+subgraph  {
+label="children_of_Attentional Trees Root";
+rank=same;
+"Initialise Blackboard Subtree" [fillcolor=orange, fontcolor=black, fontsize=9, label="Initialise Blackboard Subtree", shape=box, style=filled];
+End [fillcolor=gray, fontcolor=black, fontsize=9, label=End, shape=ellipse, style=filled];
+}
+
+}

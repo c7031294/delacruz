@@ -1,0 +1,35 @@
+1. que metodos greifen emphasis.json file
+- cual es el metodo responsable de cambiar el tree according to el objeto
+2. por que tengo dos emphasis json files?
+- emphasis.json tiene informacion sobre distance to object, una emphasislist 
+	parametros: distance_to_object, emphasis_list con cada emphasis_object, object, rmin, rmax, alpha, beta
+- prepare_coffee_emphasis tiene la estructura del tree y parametros:
+	parametros:postcondition, distance_to_object, emphasis_object
+	Q1.: postconditoin list coge la info del json file para set en el blackboard?
+
+	Q2.: por que tengo informacion doble sobre parametros? 
+	     necesito dos emphasis?
+             que metodos usan un .json y el otro
+	Q3.: donde actualizo el postcondition_list una vez ejecutada la accion?
+        
+
+
+A1.: coge la info de prepare_coffee_emphasis.json, ahi cada node tiene un postcondition
+Esta implementado en initialise_postcondition_list, dentro de create_behavior_tree method
+A2.:
+- emphasis.json wird folgendes verwendet:
+   - BlackboardWriter
+- prepare_coffee_emphasis.json wird folgendes verwendet:
+  - create_behavior_tree
+A3.: en BlackboardWriter hay un amago de set un postcondition, pero (1) no se actualiza, solo set en WRITE y (2) se llama postcondition y no postcontidion_list
+
+BlackboardWriter se  ha juntado con SetEmphasis para hacerlo todo en el mismo nodo
+
+
+
+prepare_coffee_emphasis se utiliza en:
+prepostcondition list init
+prepare coffee subtree expan
+
+emphasis se utiliza en SetEmphasis
+

@@ -2,34 +2,72 @@ digraph pastafarianism {
 graph [fontname="times-roman"];
 node [fontname="times-roman"];
 edge [fontname="times-roman"];
-"Prepare Coffee" [fillcolor=gold, fontcolor=black, fontsize=9, label="Prepare Coffee\n--SuccessOnAll(⚡)--", shape=parallelogram, style=filled];
-"Check Emphasis" [fillcolor=orange, fontcolor=black, fontsize=9, label="Check Emphasis", shape=box, style=filled];
-"Prepare Coffee" -> "Check Emphasis";
-Writer [fillcolor=gray, fontcolor=black, fontsize=9, label=Writer, shape=ellipse, style=filled];
-"Check Emphasis" -> Writer;
-SetEmphasizedObject [fillcolor=gray, fontcolor=black, fontsize=9, label=SetEmphasizedObject, shape=ellipse, style=filled];
-"Check Emphasis" -> SetEmphasizedObject;
+"Prepare Coffee" [fillcolor=orange, fontcolor=black, fontsize=9, label="Prepare Coffee", shape=box, style=filled];
+"Initialise Pre and Postconditions in Blackboard" [fillcolor=orange, fontcolor=black, fontsize=9, label="Initialise Pre and Postconditions in Blackboard", shape=box, style=filled];
+"Prepare Coffee" -> "Initialise Pre and Postconditions in Blackboard";
+"Initialise PreCondition List in Blackboard" [fillcolor=cyan, fontcolor=black, fontsize=9, label="Initialise PreCondition List in Blackboard", shape=octagon, style=filled];
+"Initialise Pre and Postconditions in Blackboard" -> "Initialise PreCondition List in Blackboard";
+CheckBlackboardVariableExists [fillcolor=gray, fontcolor=black, fontsize=9, label=CheckBlackboardVariableExists, shape=ellipse, style=filled];
+"Initialise PreCondition List in Blackboard" -> CheckBlackboardVariableExists;
+"Pre-Post-Condition Handling" [fillcolor=gray, fontcolor=black, fontsize=9, label="Pre-Post-Condition Handling", shape=ellipse, style=filled];
+"Initialise PreCondition List in Blackboard" -> "Pre-Post-Condition Handling";
 subgraph  {
-label="children_of_Check Emphasis";
+label="children_of_Initialise PreCondition List in Blackboard";
 rank=same;
-Writer [fillcolor=gray, fontcolor=black, fontsize=9, label=Writer, shape=ellipse, style=filled];
-SetEmphasizedObject [fillcolor=gray, fontcolor=black, fontsize=9, label=SetEmphasizedObject, shape=ellipse, style=filled];
+CheckBlackboardVariableExists [fillcolor=gray, fontcolor=black, fontsize=9, label=CheckBlackboardVariableExists, shape=ellipse, style=filled];
+"Pre-Post-Condition Handling" [fillcolor=gray, fontcolor=black, fontsize=9, label="Pre-Post-Condition Handling", shape=ellipse, style=filled];
 }
 
-"Emphasized Tree" [fillcolor=orange, fontcolor=black, fontsize=9, label="Emphasized Tree", shape=box, style=filled];
-"Prepare Coffee" -> "Emphasized Tree";
-water [fillcolor=cyan, fontcolor=black, fontsize=9, label=water, shape=octagon, style=filled];
-"Emphasized Tree" -> water;
-"Poured?" [fillcolor=gray, fontcolor=black, fontsize=9, label="Poured?", shape=ellipse, style=filled];
-water -> "Poured?";
-"Poured?*" [fillcolor=orange, fontcolor=black, fontsize=9, label="Poured?*", shape=box, style=filled];
-water -> "Poured?*";
-pour_water [fillcolor=gray, fontcolor=black, fontsize=9, label=pour_water, shape=ellipse, style=filled];
-"Poured?*" -> pour_water;
-poured_water [fillcolor=gray, fontcolor=black, fontsize=9, label=poured_water, shape=ellipse, style=filled];
-"Poured?*" -> poured_water;
+"Initialise Postcondition List in Blackboard" [fillcolor=cyan, fontcolor=black, fontsize=9, label="Initialise Postcondition List in Blackboard", shape=octagon, style=filled];
+"Initialise Pre and Postconditions in Blackboard" -> "Initialise Postcondition List in Blackboard";
+"CheckBlackboardVariableExists*" [fillcolor=gray, fontcolor=black, fontsize=9, label="CheckBlackboardVariableExists*", shape=ellipse, style=filled];
+"Initialise Postcondition List in Blackboard" -> "CheckBlackboardVariableExists*";
+"Pre-Post-Condition Handling*" [fillcolor=gray, fontcolor=black, fontsize=9, label="Pre-Post-Condition Handling*", shape=ellipse, style=filled];
+"Initialise Postcondition List in Blackboard" -> "Pre-Post-Condition Handling*";
 subgraph  {
-label="children_of_Poured?";
+label="children_of_Initialise Postcondition List in Blackboard";
+rank=same;
+"CheckBlackboardVariableExists*" [fillcolor=gray, fontcolor=black, fontsize=9, label="CheckBlackboardVariableExists*", shape=ellipse, style=filled];
+"Pre-Post-Condition Handling*" [fillcolor=gray, fontcolor=black, fontsize=9, label="Pre-Post-Condition Handling*", shape=ellipse, style=filled];
+}
+
+subgraph  {
+label="children_of_Initialise Pre and Postconditions in Blackboard";
+rank=same;
+"Initialise PreCondition List in Blackboard" [fillcolor=cyan, fontcolor=black, fontsize=9, label="Initialise PreCondition List in Blackboard", shape=octagon, style=filled];
+"Initialise Postcondition List in Blackboard" [fillcolor=cyan, fontcolor=black, fontsize=9, label="Initialise Postcondition List in Blackboard", shape=octagon, style=filled];
+}
+
+"Attentional Subtree" [fillcolor=cyan, fontcolor=black, fontsize=9, label="Attentional Subtree", shape=octagon, style=filled];
+"Prepare Coffee" -> "Attentional Subtree";
+CheckGoal [fillcolor=gray, fontcolor=black, fontsize=9, label=CheckGoal, shape=ellipse, style=filled];
+"Attentional Subtree" -> CheckGoal;
+"Retrieve & Expand Tree" [fillcolor=gold, fontcolor=black, fontsize=9, label="Retrieve & Expand Tree\n--SuccessOnAll(⚡)--", shape=parallelogram, style=filled];
+"Attentional Subtree" -> "Retrieve & Expand Tree";
+SetEmphasizedObject [fillcolor=gray, fontcolor=black, fontsize=9, label=SetEmphasizedObject, shape=ellipse, style=filled];
+"Retrieve & Expand Tree" -> SetEmphasizedObject;
+"Retrieve & Expand Emphasized Subtree" [fillcolor=orange, fontcolor=black, fontsize=9, label="Retrieve & Expand Emphasized Subtree", shape=box, style=filled];
+"Retrieve & Expand Tree" -> "Retrieve & Expand Emphasized Subtree";
+"Retrieve Subtree" [fillcolor=cyan, fontcolor=black, fontsize=9, label="Retrieve Subtree", shape=octagon, style=filled];
+"Retrieve & Expand Emphasized Subtree" -> "Retrieve Subtree";
+"Changed Emphasis?" [fillcolor=gray, fontcolor=black, fontsize=9, label="Changed Emphasis?", shape=ellipse, style=filled];
+"Retrieve Subtree" -> "Changed Emphasis?";
+"Expand Subtree" [fillcolor=orange, fontcolor=black, fontsize=9, label="Expand Subtree", shape=box, style=filled];
+"Retrieve Subtree" -> "Expand Subtree";
+"Prepare Coffee Subtree Expand" [fillcolor=orange, fontcolor=black, fontsize=9, label="Prepare Coffee Subtree Expand", shape=box, style=filled];
+"Expand Subtree" -> "Prepare Coffee Subtree Expand";
+water [fillcolor=cyan, fontcolor=black, fontsize=9, label=water, shape=octagon, style=filled];
+"Prepare Coffee Subtree Expand" -> water;
+CheckBlackboardVariableValue [fillcolor=gray, fontcolor=black, fontsize=9, label=CheckBlackboardVariableValue, shape=ellipse, style=filled];
+water -> CheckBlackboardVariableValue;
+"Check water" [fillcolor=orange, fontcolor=black, fontsize=9, label="Check water", shape=box, style=filled];
+water -> "Check water";
+pour_water [fillcolor=gray, fontcolor=black, fontsize=9, label=pour_water, shape=ellipse, style=filled];
+"Check water" -> pour_water;
+poured_water [fillcolor=gray, fontcolor=black, fontsize=9, label=poured_water, shape=ellipse, style=filled];
+"Check water" -> poured_water;
+subgraph  {
+label="children_of_Check water";
 rank=same;
 pour_water [fillcolor=gray, fontcolor=black, fontsize=9, label=pour_water, shape=ellipse, style=filled];
 poured_water [fillcolor=gray, fontcolor=black, fontsize=9, label=poured_water, shape=ellipse, style=filled];
@@ -38,29 +76,69 @@ poured_water [fillcolor=gray, fontcolor=black, fontsize=9, label=poured_water, s
 subgraph  {
 label=children_of_water;
 rank=same;
-"Poured?" [fillcolor=gray, fontcolor=black, fontsize=9, label="Poured?", shape=ellipse, style=filled];
-"Poured?*" [fillcolor=orange, fontcolor=black, fontsize=9, label="Poured?*", shape=box, style=filled];
+CheckBlackboardVariableValue [fillcolor=gray, fontcolor=black, fontsize=9, label=CheckBlackboardVariableValue, shape=ellipse, style=filled];
+"Check water" [fillcolor=orange, fontcolor=black, fontsize=9, label="Check water", shape=box, style=filled];
+}
+
+subgraph  {
+label="children_of_Retrieve Subtree";
+rank=same;
+"Changed Emphasis?" [fillcolor=gray, fontcolor=black, fontsize=9, label="Changed Emphasis?", shape=ellipse, style=filled];
+"Expand Subtree" [fillcolor=orange, fontcolor=black, fontsize=9, label="Expand Subtree", shape=box, style=filled];
+}
+
+"Prepare Coffee Subtree Expand*" [fillcolor=orange, fontcolor=black, fontsize=9, label="Prepare Coffee Subtree Expand*", shape=box, style=filled];
+"Retrieve & Expand Emphasized Subtree" -> "Prepare Coffee Subtree Expand*";
+"water*" [fillcolor=cyan, fontcolor=black, fontsize=9, label="water*", shape=octagon, style=filled];
+"Prepare Coffee Subtree Expand*" -> "water*";
+"CheckBlackboardVariableValue*" [fillcolor=gray, fontcolor=black, fontsize=9, label="CheckBlackboardVariableValue*", shape=ellipse, style=filled];
+"water*" -> "CheckBlackboardVariableValue*";
+"Check water*" [fillcolor=orange, fontcolor=black, fontsize=9, label="Check water*", shape=box, style=filled];
+"water*" -> "Check water*";
+"pour_water*" [fillcolor=gray, fontcolor=black, fontsize=9, label="pour_water*", shape=ellipse, style=filled];
+"Check water*" -> "pour_water*";
+"poured_water*" [fillcolor=gray, fontcolor=black, fontsize=9, label="poured_water*", shape=ellipse, style=filled];
+"Check water*" -> "poured_water*";
+subgraph  {
+label="children_of_Check water";
+rank=same;
+"pour_water*" [fillcolor=gray, fontcolor=black, fontsize=9, label="pour_water*", shape=ellipse, style=filled];
+"poured_water*" [fillcolor=gray, fontcolor=black, fontsize=9, label="poured_water*", shape=ellipse, style=filled];
+}
+
+subgraph  {
+label=children_of_water;
+rank=same;
+"CheckBlackboardVariableValue*" [fillcolor=gray, fontcolor=black, fontsize=9, label="CheckBlackboardVariableValue*", shape=ellipse, style=filled];
+"Check water*" [fillcolor=orange, fontcolor=black, fontsize=9, label="Check water*", shape=box, style=filled];
+}
+
+subgraph  {
+label="children_of_Retrieve & Expand Emphasized Subtree";
+rank=same;
+"Retrieve Subtree" [fillcolor=cyan, fontcolor=black, fontsize=9, label="Retrieve Subtree", shape=octagon, style=filled];
+"Prepare Coffee Subtree Expand*" [fillcolor=orange, fontcolor=black, fontsize=9, label="Prepare Coffee Subtree Expand*", shape=box, style=filled];
+}
+
+subgraph  {
+label="children_of_Retrieve & Expand Tree";
+rank=same;
+SetEmphasizedObject [fillcolor=gray, fontcolor=black, fontsize=9, label=SetEmphasizedObject, shape=ellipse, style=filled];
+"Retrieve & Expand Emphasized Subtree" [fillcolor=orange, fontcolor=black, fontsize=9, label="Retrieve & Expand Emphasized Subtree", shape=box, style=filled];
+}
+
+subgraph  {
+label="children_of_Attentional Subtree";
+rank=same;
+CheckGoal [fillcolor=gray, fontcolor=black, fontsize=9, label=CheckGoal, shape=ellipse, style=filled];
+"Retrieve & Expand Tree" [fillcolor=gold, fontcolor=black, fontsize=9, label="Retrieve & Expand Tree\n--SuccessOnAll(⚡)--", shape=parallelogram, style=filled];
 }
 
 subgraph  {
 label="children_of_Prepare Coffee";
 rank=same;
-"Check Emphasis" [fillcolor=orange, fontcolor=black, fontsize=9, label="Check Emphasis", shape=box, style=filled];
-"Emphasized Tree" [fillcolor=orange, fontcolor=black, fontsize=9, label="Emphasized Tree", shape=box, style=filled];
+"Initialise Pre and Postconditions in Blackboard" [fillcolor=orange, fontcolor=black, fontsize=9, label="Initialise Pre and Postconditions in Blackboard", shape=box, style=filled];
+"Attentional Subtree" [fillcolor=cyan, fontcolor=black, fontsize=9, label="Attentional Subtree", shape=octagon, style=filled];
 }
 
-"Read Emphasized Object for Tree Expansion" [color=blue, fillcolor=gray, fontcolor=blue, fontsize=7, label="Read Emphasized Object for Tree Expansion", shape=ellipse, style=filled];
-"/parameters/emphasis_list" [color=blue, fillcolor=white, fixedsize=False, fontcolor=blue, fontsize=8, height=0, label="/parameters/emphasis_list: -", shape=box, style=filled, width=0];
-"/parameters/emphasis_list" -> SetEmphasizedObject  [color=blue, constraint=False];
-Writer -> "/parameters/emphasis_list"  [color=blue, constraint=True];
-"/parameters/object" [color=blue, fillcolor=white, fixedsize=False, fontcolor=blue, fontsize=8, height=0, label="/parameters/object: water", shape=box, style=filled, width=0];
-"/parameters/object" -> "Read Emphasized Object for Tree Expansion"  [color=blue, constraint=False];
-SetEmphasizedObject -> "/parameters/object"  [color=blue, constraint=True];
-Writer -> "/parameters/object"  [color=blue, constraint=True];
-"/parameters/emphasis" [color=blue, fillcolor=white, fixedsize=False, fontcolor=blue, fontsize=8, height=0, label="/parameters/emphasis: -", shape=box, style=filled, width=0];
-SetEmphasizedObject -> "/parameters/emphasis"  [color=blue, constraint=True];
-"/Poured?" [color=blue, fillcolor=white, fixedsize=False, fontcolor=blue, fontsize=8, height=0, label="/Poured?: -", shape=box, style=filled, width=0];
-"/Poured?" -> "Poured?"  [color=blue, constraint=False];
-"/poured_water" [color=blue, fillcolor=white, fixedsize=False, fontcolor=blue, fontsize=8, height=0, label="/poured_water: -", shape=box, style=filled, width=0];
-poured_water -> "/poured_water"  [color=blue, constraint=True];
 }

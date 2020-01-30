@@ -1,0 +1,51 @@
+Writer is the communication to the outside world. It does two things:
+  1. reads distance_to_object and object from json emphasis schema -> init() --> change it to blackboard
+  2. Updates emphasis list from high to low in terms of monitoring function -> update() and writes it to the blackboard
+SetEmphasis: reads emphasis_list from the blackboard and set highest emphasis -> writes to the blackboard the task which
+will be activated
+*task is linked with object name
+Behavior Tree:
+    1. One BT created for each tick-just one subtree is added-depending on emphasis
+    2. in idioms.py emphasized_tree expands the subtree according to the emphasized task based on PA-BT approach
+    2.1. reads prepare_coffee schema
+    2.2.  post-conditions are set here
+
+Testing: update json string emphasis with distance_to_object. Emphasized_object gets updated
+Postcondition list
+1. Postcondition list stored in the blackboard
+2. In EmphasizedTree function, the postcondition is set as a node.
+3. Create a FallBack Node where condition Node CheckGoal is added
+    3.1 In this set, you need to update the postcondition list too, and check if the overall task execution is done
+    3.2. Postcondition list is updated in idioms.py EmphasizedTree, SetBlackBoardVariable function, once postcondition
+    node is executed
+    ** Problem: don't know how to set a dictionary for postconditoins key-value in the blackboard: is it possible?
+
+I've created a PostCondition Behavior Class
+- init function: sets postcondition_list in blackboard
+- update function: updates postcondition_list in blackboard
+*These are called in the emphasized_tree while creating postcondition nodes
+
+I've created a CheckGoal node and called it during tree creation in main
+- This is inserted as fallback before emphasizing tree
+- This is defined as behavior
+22.12.2019
+- need to add preconditions in the blackboard
+- dot_tree check
+10.1.2020
+Attentional part left:
+status current: writer node, which reads the emphasis_list
+SetEmphasizedObject: writes the most emphasized value (sorting) to
+emphasized object
+To be done:
+1. change this to just one node, which does read and write operations and is called SetEmphasis
+*ChangeEmphasis in image is called CheckGoal
+2. Check emphasized tree. Somehow the postcondition is not updated so that the tree changes the action
+   The pre_condition is not yet updated in the blackboard either. It needs to be set to the blackboard based
+   on the postcondition_list
+update 11.1.2019
+el arbol solo se actualiza cuando cambio a mano el object en json file
+update 22.1.2020
+    precondition in idioms not updated correctly
+update 27.1.2020
+    precondition in idioms bug solved
+    create_behaviour_tree creates roots for subtrees are always water and coffee
