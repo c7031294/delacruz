@@ -1,0 +1,201 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%2345678901234567890123456789012345678901234567890123456789012345678901234567890
+%        1         2         3         4         5         6         7         8
+
+\documentclass[letterpaper, 10 pt, conference]{ieeeconf}  % Comment this line out if you need a4paper
+
+%\documentclass[a4paper, 10pt, conference]{ieeeconf}      % Use this line for a4 paper
+
+\IEEEoverridecommandlockouts                              % This command is only needed if 
+                                                          % you want to use the \thanks command
+
+\overrideIEEEmargins                                      % Needed to meet printer requirements.
+
+%In case you encounter the following error:
+%Error 1010 The PDF file may be corrupt (unable to open PDF file) OR
+%Error 1000 An error occurred while parsing a contents stream. Unable to analyze the PDF file.
+%This is a known problem with pdfLaTeX conversion filter. The file cannot be opened with acrobat reader
+%Please use one of the alternatives below to circumvent this error by uncommenting one or the other
+%\pdfobjcompresslevel=0
+%\pdfminorversion=4
+
+% See the \addtolength command later in the file to balance the column lengths
+% on the last page of the document
+
+% The following packages can be found on http:\\www.ctan.org
+%\usepackage{graphics} % for pdf, bitmapped graphics files
+%\usepackage{epsfig} % for postscript graphics files
+%\usepackage{mathptmx} % assumes new font selection scheme installed
+%\usepackage{times} % assumes new font selection scheme installed
+%\usepackage{amsmath} % assumes amsmath package installed
+%\usepackage{amssymb}  % assumes amsmath package installed
+
+\title{\LARGE \bf
+Attentional Trees And Robotics: Towards an Executive Framework Meeting High-level Decision Making and Control Layer Features.\\
+}
+
+
+\author{Pilar de la Cruz$^{1}$ and Matteo Saveriano$^{2}$}% <-this % stops a space
+%\thanks{*}% <-this % stops a space
+%\thanks{$^{1}$Albert Author is with Faculty of Electrical Engineering, Mathematics and Computer Science,
+%        University of Twente, 7500 AE Enschede, The Netherlands
+%        {\tt\small albert.author@papercept.net}}%
+%\thanks{$^{2}$Bernard D. Researcheris with the Department of Electrical Engineering, Wright State University,
+%        Dayton, OH 45435, USA
+%        {\tt\small b.d.researcher@ieee.org}}%
+%}
+
+
+\begin{document}
+
+
+
+\maketitle
+\thispagestyle{empty}
+\pagestyle{empty}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+
+This electronic document is a ÒliveÓ template. The various components of your paper [title, text, heads, etc.] are already defined on the style sheet, as illustrated by the portions given in this document.
+
+\end{abstract}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{INTRODUCTION}
+
+This template provides authors with most of the formatting specifications needed for preparing electronic versions of their papers. All standard paper components have been specified for three reasons: (1) ease of use when formatting individual papers, (2) automatic compliance to electronic requirements that facilitate the concurrent or later production of electronic products, and (3) conformity of style throughout a conference proceedings. Margins, column widths, line spacing, and type styles are built-in; examples of the type styles are provided throughout this document and are identified in italic type, within parentheses, following the example. Some components, such as multi-leveled equations, graphics, and tables are not prescribed, although the various table text styles are provided. The formatter will need to create these components, incorporating the applicable criteria that follow.
+
+\section{Related Works}
+
+\subsection{Logic fixed Techniques}
+
+First, confirm that you have the correct template for your paper size. This template has been tailored for output on the US-letter paper size. 
+It may be used for A4 paper size if the paper size setting is suitably modified.
+
+\subsection{Attentional techniques}
+
+The template is used to format your paper and style the text. All margins, column widths, line spaces, and text fonts are prescribed; please do not alter them. You may note peculiarities. For example, the head margin in this template measures proportionately more than is customary. This measurement and others are deliberate, using specifications that anticipate your paper as one part of the entire proceedings, and not as an independent document. Please do not revise any of the current designations
+
+\section{System Overview}
+Attentional Trees framework aims at integrating the following features:
+\begin{enumerate}
+\item Task planner based on Behavior Trees
+\item Priority handling of tasks based on attentional mechanisms and emphasis \cite{b2}
+\item JSON schema conversion into Behavior Trees 
+%\item Event-based approach of Behavior Tree  execution
+\end{enumerate}
+
+\subsection{Task Planning}
+\subsection{Priority Handling}
+\subsubsection{Attentional Mechanism}
+\subsubsection{Emphasis}
+\subsection{JSON Schema}
+ A typical JSON schema consists of a list of string objects. The first object element defines the root of the Behavior Tree. The remaining object elements are defined as subtrees and will be added recursively as children from the root. Each object contains properties \verb|name|, \verb|type|, \verb|father|, \verb|children| and \verb|parameters|, which provide with information about the Behavior Tree node types as well as additional attributes for pre-and post-conditioning handling, priority execution and any additional information. 
+ 
+ \begin{verbatim}
+{
+    "name":"selector01",
+    "type":"selector",
+    "father": "sequence01",
+    "children": ["isReached","reach"],
+    "parameters": [["emphasis", 1]]
+}
+
+
+\end{verbatim}
+
+\section{Method}
+
+
+\subsection{Behavior Trees Overview}
+A Behavior Tree (BT) is defined as a way to structure the switching between different tasks in an autonomous agent \cite{c1}. Motivated by the limitations of Finite State Machines\footnote{"one-way control are an„invitation to make a mess of one‘s program“ - Dijkstra \cite{c2}}, it provides with an ability to quickly and efficiently react to changes as well as the required modularity in systems where system's components may be interchangable and/or extendable.
+\subsubsection{Formulation of Behavior Trees}
+Behavior Trees can be divided into two type of nodes: control flow nodes and execution nodes. Control flow nodes may be of type Sequence, Fallback/Selector, Decorators or Parallel. Similarly, execution nodes may be either conditions or actions. Each node can return success or failure after execution. The type of node defines the behavior and task execution order depending on the return value of each node. Table \ref{tab:btformulation} provides a description of this behavior. 
+
+% Please add the following required packages to your document preamble:
+% 
+% Please add the following required packages to your document preamble:
+% \usepackage{graphicx}
+\begin{table}[]
+\centering
+\begin{tabular}{|l|c|c|c|}
+\hline
+\multicolumn{1}{|c|}{\textit{Node Type}} & \textit{Success}                   & \textit{Failure}                  & \textit{Running}             \\ \hline
+\textit{\begin{tabular}[c]{@{}l@{}}Fallback/\\ Selector\end{tabular}} & If one child succeeds & If all children fail & If one child returns Running \\ \hline
+\textit{Sequence}                        & If all children succeed            & If one child fails                & If one child returns Running \\ \hline
+\textit{Parallel}                        & If \textgreater M children succeed & If \textgreater N-M childrne fail & else                         \\ \hline
+\textit{Action}                          & Upon completion                    & If impossible to complete         & During completion            \\ \hline
+\textit{Condition}                       & if True                            & if False                          & Never                        \\ \hline
+\textit{Decorator}                       & Custom                             & Custom                            & Custom                       \\ \hline
+\end{tabular}
+\caption{Types of BT nodes and their return status}
+\label{tab:btformulation}
+\end{table}
+
+\subsection{Execution of Behavior Trees}
+
+\subsection{Emphasis and Planning}
+\subsection{Blackboard Mechanism}
+\subsection{Implementation Details}
+
+\section{Evaluation}
+\subsection{Use Cases}
+
+
+\section{CONCLUSIONS}
+
+A conclusion section is not required. Although a conclusion may review the main points of the paper, do not replicate the abstract as the conclusion. A conclusion might elaborate on the importance of the work or suggest applications and extensions. 
+
+\addtolength{\textheight}{-12cm}   % This command serves to balance the column lengths
+                                  % on the last page of the document manually. It shortens
+                                  % the textheight of the last page by a suitable amount.
+                                  % This command does not take effect until the next page
+                                  % so it should come on the page before the last. Make
+                                  % sure that you do not shorten the textheight too much.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{APPENDIX}
+
+Appendixes should appear before the acknowledgment.
+
+\section*{ACKNOWLEDGMENT}
+
+The preferred spelling of the word ÒacknowledgmentÓ in America is without an ÒeÓ after the ÒgÓ. Avoid the stilted expression, ÒOne of us (R. B. G.) thanks . . .Ó  Instead, try ÒR. B. G. thanksÓ. Put sponsor acknowledgments in the unnumbered footnote on the first page.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+References are important to the reader; therefore, each citation must be complete and correct. If at all possible, references should be commonly available publications.
+
+
+
+\begin{thebibliography}{99}
+
+\bibitem{c1} Michele Colledanchise and Petter Ogren. Behavior Trees in Robotics and AI. An Introduction. arXiv:1709.00084v3 [cs.RO] 15 Jan 2018.
+\bibitem{c2} Edsger W. Dijkstra. Letters to the editor: go to statement considered harmful. Commun. ACM, 11:147–148, March 1968.
+\bibitem{c3} Malik Ghallab, Dana Nau, and Paolo Traverso. The actor’s view of automated planning and acting: A position paper. Artif. Intell., 208:1–17, March 2014.
+\bibitem{c4} Caelan Reed Garrett, Tomas Lozano-P ´ erez, and Leslie Pack Kaelbling. Backward-forward ´ search for manipulation planning. In Intelligent Robots and Systems (IROS), 2015 IEEE/RSJ International Conference on, pages 6366–6373. IEEE, 2015.
+\bibitem{c5} Leslie Pack Kaelbling and Tomas Lozano-P ´ erez. Hierarchical task and motion planning in ´ the now. In Robotics and Automation (ICRA), 2011 IEEE International Conference on, pages 1470–1477. IEEE, 2011.
+
+
+
+
+
+\end{thebibliography}
+
+
+
+
+\end{document}
