@@ -111,37 +111,60 @@ Attentional Trees framework aims at integrating the following features:
 
 
 \subsection{Behavior Trees Overview}
-A Behavior Tree (BT) is defined as a way to structure the switching between different tasks in an autonomous agent \cite{c1}. Motivated by the limitations of Finite State Machines\footnote{"one-way control are an„invitation to make a mess of one‘s program“ - Dijkstra \cite{c2}}, it provides with an ability to quickly and efficiently react to changes as well as the required modularity in systems where system's components may be interchangable and/or extendable.
+
+
 \subsubsection{Formulation of Behavior Trees}
-Behavior Trees can be divided into two type of nodes: control flow nodes and execution nodes. Control flow nodes may be of type Sequence, Fallback/Selector, Decorators or Parallel. Similarly, execution nodes may be either conditions or actions. Each node can return success or failure after execution. The type of node defines the behavior and task execution order depending on the return value of each node. Table \ref{tab:btformulation} provides a description of this behavior. 
+A Behavior Tree (BT) is defined as a way to structure the switching between different tasks in an autonomous agent \cite{c1}. Motivated by the limitations of Finite State Machines\footnote{"one-way control are an„invitation to make a mess of one‘s program“ - Dijkstra \cite{c2}}, it provides with an ability to quickly and efficiently react to changes as well as the required modularity in systems where components may be interchangable and/or extendable.\\
+Behavior Trees can be divided into two type of nodes: control flow nodes and execution nodes. Control flow nodes may be of type Sequence, Fallback/Selector, Decorators or Parallel. Similarly, execution nodes may be either conditions or actions. Symbols for each node are defined in Figures .... respectively.
+
+\subsubsection{Execution of Behavior Trees}
+A Behavior Tree is executed from its root node by spreading \textit{ticks} with a given frequency from the root throughout all its children. Children will be only executed if they receive ticks and may respond with either return status \textit{Running}, \textit{Success} or \textit{Failure}. The way each type of node respond to ticks is described in Table \ref{tab:btformulation}.\\
 
 % Please add the following required packages to your document preamble:
-% 
-% Please add the following required packages to your document preamble:
 % \usepackage{graphicx}
-\begin{table}[]
-\centering
+
+\begin{table}[htb!]
 \begin{tabular}{|l|c|c|c|}
 \hline
-\multicolumn{1}{|c|}{\textit{Node Type}} & \textit{Success}                   & \textit{Failure}                  & \textit{Running}             \\ \hline
+\multicolumn{1}{|c|}{\textit{Node Type}} & \textit{Success} & \textit{Failure} & \textit{Running} \\ \hline
 \textit{\begin{tabular}[c]{@{}l@{}}Fallback/\\ Selector\end{tabular}} & If one child succeeds & If all children fail & If one child returns Running \\ \hline
-\textit{Sequence}                        & If all children succeed            & If one child fails                & If one child returns Running \\ \hline
-\textit{Parallel}                        & If \textgreater M children succeed & If \textgreater N-M childrne fail & else                         \\ \hline
-\textit{Action}                          & Upon completion                    & If impossible to complete         & During completion            \\ \hline
-\textit{Condition}                       & if True                            & if False                          & Never                        \\ \hline
-\textit{Decorator}                       & Custom                             & Custom                            & Custom                       \\ \hline
+\textit{Sequence} & If all children succeed & If one child fails & If one child returns Running \\ \hline
+\textit{Parallel} & If \textgreater M children succeed & If \textgreater N-M childrne fail & else \\ \hline
+\textit{Action} & Upon completion & If impossible to complete & During completion \\ \hline
+\textit{Condition} & if True & if False & Never \\ \hline
+\textit{Decorator} & Custom & Custom & Custom \\ \hline
 \end{tabular}
 \caption{Types of BT nodes and their return status}
 \label{tab:btformulation}
 \end{table}
 
-\subsection{Execution of Behavior Trees}
+The Sequence node executes its children sequentially. The traversal starts from the first child and proceeds to the following until a child returns either running or failure status. 
+\begin{itemize}
+\item The Fallback or Selector node executes its children sequentially until one succeeds. This node the will execute unless one child succeeds, in which case the Selector ends with return status \textit{Success}. 
+\item The Parallel node will traverse all its children in a single step, allowing more than one of its children to be running at the same time.
+\item The condition node is ideal for using simple predicates in the Behavior Tree. The condition node will return either \textit{Success} or \textit{Failure} in case the predicate is True or False respectively. The need of adding precondition during planning (See Section \ref{em-p}) will motivate the use of these type of nodes during implementation.
+\item The action node triggers an ayschronous execution while \textit{Running}. It will remain with status Running until the action is ended, at this point its status turns to \textit{Success}. In case during tick tree traversal an action node is not traversed, the execution will be cancelled and return status will turn to \textit{Failure} 
+\end{itemize}
+
+
+Figures provide graphical representations of typical Trees formed by Sequence, Fallback/Selector and Parallel Nodes respectively.
 
 \subsection{Emphasis and Planning}
+\label{em-p}
+Inspired by \cite{c6}, Emphasis accounts for adding bottom-up regulations in the Behavior Tree to support planning and keep a goal-oriented task execution approach. This way, actions will be \textit{emphasized} depending on environment variables(object detected, distance from agent to object, thresholds, etc). Refer to Section \ref{evaluation} for more details.\\
+
+
+-Description JSON emphasis info-\\
+The Planning approach is an extension of the backchaining method (PA-BT) described in \cite{1}. It consists of replacing a condition by a small Behavior Tree achieving that same condition. Actions are then carried out in order to reach a specific goal which is defined at top of the tree. Action retrieval is done dynamically by loading the corresponding json schema. JSON provides not only a definition of the actions but also the way the tree should be extended. Followed by an emphasized ...
+
+Algorithm illustrates this process\\
+--Algorithm goes here---\\
+\subsubsection{Equations}
 \subsection{Blackboard Mechanism}
 \subsection{Implementation Details}
 
 \section{Evaluation}
+\label{evaluation}
 \subsection{Use Cases}
 
 
@@ -188,8 +211,7 @@ References are important to the reader; therefore, each citation must be complet
 \bibitem{c3} Malik Ghallab, Dana Nau, and Paolo Traverso. The actor’s view of automated planning and acting: A position paper. Artif. Intell., 208:1–17, March 2014.
 \bibitem{c4} Caelan Reed Garrett, Tomas Lozano-P ´ erez, and Leslie Pack Kaelbling. Backward-forward ´ search for manipulation planning. In Intelligent Robots and Systems (IROS), 2015 IEEE/RSJ International Conference on, pages 6366–6373. IEEE, 2015.
 \bibitem{c5} Leslie Pack Kaelbling and Tomas Lozano-P ´ erez. Hierarchical task and motion planning in ´ the now. In Robotics and Automation (ICRA), 2011 IEEE International Conference on, pages 1470–1477. IEEE, 2011.
-
-
+\bibitem{c6}Matteo's framework
 
 
 
